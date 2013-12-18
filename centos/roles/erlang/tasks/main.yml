@@ -8,18 +8,18 @@
 - get_url: url=http://www.openssl.org/source/openssl-{{ openssl_version }}.tar.gz
            dest={{ work_dir }}
 
-- command: creates=/opt/openssl/{{ version }}/bin/
+- command: creates=/opt/openssl/{{ openssl_version }}/bin/openssl
            tar xvfz {{ work_dir }}/openssl-{{ openssl_version }}.tar.gz
 
-- command: creates=/opt/openssl/{{ openssl_version }}/bin/
+- command: creates=/opt/openssl/{{ openssl_version }}/bin/openssl
            chdir={{ work_dir }}/openssl-{{ openssl_version }}
            ./config --prefix=/opt/openssl/{{ openssl_version }} shared
 
-- command: creates=/opt/openssl/{{ openssl_version }}/bin/erl
+- command: creates=/opt/openssl/{{ openssl_version }}/bin/openssl
            chdir={{ work_dir }}/openssl-{{ openssl_version }}
            make
 
-- command: creates=/opt/openssl/{{ openssl_version }}/bin/erl
+- command: creates=/opt/openssl/{{ openssl_version }}/bin/openssl
            chdir={{ work_dir }}/openssl-{{ openssl_version }}
            make install
   sudo: true

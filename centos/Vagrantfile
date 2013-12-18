@@ -40,8 +40,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # information on available options.
 
   config.vm.provision :ansible do |ansible|
-    ansible.playbook = "../provision.yml"
-    ansible.inventory_path = "../ansible_hosts"
+    ansible.playbook = "provision.yml"
+    ansible.inventory_path = "ansible_hosts"
   end
 
 end
