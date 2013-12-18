@@ -14,3 +14,6 @@ box は packer で作る
     $ packer build -only virtualbox template.json
 
 
+::
+
+    $ vagrant box add centos-6-5-x64 /path/to/centos-6-5-x64-virtualbox.box

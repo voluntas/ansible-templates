@@ -1,0 +1,54 @@
+- yum: name={{ item }} state=latest
+  with_items:
+    - gcc
+    - make
+    - ncurses-devel
+  sudo: true
+
+- get_url: url=http://www.openssl.org/source/openssl-{{ openssl_version }}.tar.gz
+           dest={{ work_dir }}
+
+- command: creates=/opt/openssl/{{ version }}/bin/
+           tar xvfz {{ work_dir }}/openssl-{{ openssl_version }}.tar.gz
+
+- command: creates=/opt/openssl/{{ openssl_version }}/bin/
+           chdir={{ work_dir }}/openssl-{{ openssl_version }}
+           ./config --prefix=/opt/openssl/{{ openssl_version }} shared
+
+- command: creates=/opt/openssl/{{ openssl_version }}/bin/erl
+           chdir={{ work_dir }}/openssl-{{ openssl_version }}
+           make
+
+- command: creates=/opt/openssl/{{ openssl_version }}/bin/erl
+           chdir={{ work_dir }}/openssl-{{ openssl_version }}
+           make install
+  sudo: true
+
+- get_url: url=http://download.basho.co.jp.cs-ap-e1.ycloud.jp/otp/download/otp_src_{{ version }}.tar.gz
+           dest={{ work_dir }}
+
+- command: creates=/opt/erlang/{{ version }}/bin/erl
+           tar xvfz {{ work_dir }}/otp_src_{{ version }}.tar.gz
+
+- command: creates=/opt/erlang/{{ version }}/bin/erl
+           chdir={{ work_dir }}/otp_src_{{ version }}
+           ./configure --prefix=/opt/erlang/{{ version }}
+                       --with-ssl=/opt/openssl/{{ openssl_version }}
+                       --enable-smp-support
+                       --enable-halfword-emulator
+                       --enable-m64-build
+                       --enable-threads
+                       --enable-kernel-poll
+                       --disable-native-libs
+                       --disable-sctp
+                       --disable-hipe
+                       --without-javac
+
+- command: creates=/opt/erlang/{{ version }}/bin/erl
+           chdir={{ work_dir }}/otp_src_{{ version }}
+           make
+
+- command: creates=/opt/erlang/{{ version }}/bin/erl
+           chdir={{ work_dir }}/otp_src_{{ version }}
+           make install
+  sudo: true

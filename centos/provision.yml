@@ -1,0 +1,10 @@
+---
+- hosts: vagrant
+  sudo: false
+  user: vagrant
+  roles:
+    - erlang
+  vars:
+    work_dir: /home/vagrant
+    virtualenvs_dir: /home/vagrant/.virtualenvs
+
